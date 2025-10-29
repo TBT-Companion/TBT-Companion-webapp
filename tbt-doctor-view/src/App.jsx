@@ -1,30 +1,23 @@
-import { useState } from 'react'
-import logo from './assets/OSU_LOGO.png'
-import viteLogo from '/vite.svg'
 import './App.css'
-import DiagnosisSummary from './components/DiagnosisSummary'
-import PatientList from './components/PatientList'
-import PatientInfo from './components/PatientInfo'
-import Schedule from './components/Schedule'
-import PainLog from './components/PainLog'
-import ProgressReport from './components/ProgressReport'
-import PatientContact from './components/PatientContact'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import ProgressReportPage from './pages/ProgressReportPage';
+import PatientContactPage from './pages/PatientContactPage';
+import NewPatientPage from './pages/NewPatientPage';
+import PainLogPage from './pages/PainLogPage';
 
 function App() {
-  const name = "Collins"
 
   return (
-    <div>
-      <img src={logo} alt="OSU Logo" width={96} height={72} className='pt-6 pl-1'/>
-      <DiagnosisSummary></DiagnosisSummary>
-      <PatientInfo></PatientInfo>
-      <Schedule></Schedule>
-      <PainLog></PainLog>
-      <ProgressReport></ProgressReport>
-      <PatientList></PatientList>
-      <PatientContact></PatientContact>
-
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Dashboard />}/>
+        <Route path='/report' element={<ProgressReportPage />}/>
+        <Route path='/contact' element={<PatientContactPage />}/>
+        <Route path='/newPatient' element={<NewPatientPage />}/>
+        <Route path='/painLog' element={<PainLogPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
