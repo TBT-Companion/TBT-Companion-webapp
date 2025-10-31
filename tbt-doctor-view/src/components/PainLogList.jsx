@@ -1,7 +1,7 @@
 const PainLogList = ({logs, selectedLog, onSelectLog}) => {
 
     return (
-      <div className="grid grid-cols-2 gap-x-[22px] gap-y-[19px] min-w-[187px]">
+      <div className="grid grid-cols-2 gap-x-[22px] gap-y-[19px] min-w-[187px] ">
         {logs.map((log) => {
           const isSelected = selectedLog.log === log.log;
           return (
