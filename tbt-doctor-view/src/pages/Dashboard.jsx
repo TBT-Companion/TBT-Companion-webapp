@@ -18,16 +18,17 @@ const Dashboard = () => {
 
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [patientDetails, setPatientDetails] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch patients from backend
+  // ✅ Fetch patient list
   const loadPatients = async () => {
     try {
       setLoading(true);
       const idToken = localStorage.getItem("idToken");
-      //console.log("Using ID Token:", idToken);
+
       const response = await fetch("http://localhost:3000/api/users/patients", {
         headers: {
           Authorization: `Bearer ${idToken}`,
@@ -40,8 +41,14 @@ const Dashboard = () => {
 
       const data = await response.json();
       console.log("Fetched patients:", data);
+
       setPatients(data);
-      setSelectedPatient(data[0] || null);
+      if (data.length > 0) {
+        setSelectedPatient(data[0]);
+        if (data[0].firebaseUid || data[0].FirebaseUid) {
+          await loadPatientDetails(data[0].firebaseUid || data[0].FirebaseUid);
+        }
+      }
     } catch (err) {
       console.error("Error loading patients:", err);
       setError("Failed to load patients");
@@ -52,14 +59,47 @@ const Dashboard = () => {
     }
   };
 
+  // ✅ Fetch full patient details by Firebase UID
+  const loadPatientDetails = async (firebaseUid) => {
+    try {
+      if (!firebaseUid) {
+        console.warn("No Firebase UID provided for patient details fetch");
+        return;
+      }
+
+      const idToken = localStorage.getItem("idToken");
+      const response = await fetch(
+        `http://localhost:3000/patient/firebase/${firebaseUid}`,
+        {
+          headers: { Authorization: `Bearer ${idToken}` },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch patient details");
+      }
+
+      const data = await response.json();
+      console.log("Patient details:", data);
+      setPatientDetails(data);
+    } catch (error) {
+      console.error("Error loading patient details:", error);
+      setPatientDetails(null);
+    }
+  };
+
+  // ✅ Load patients on mount
   useEffect(() => {
     loadPatients();
   }, []);
 
-const filteredPatients = patients.filter((patient) =>
-  patient.displayName &&
-  patient.displayName.toLowerCase().includes(searchQuery.toLowerCase())
-);
+  // ✅ Filter patient list by displayName or name fields
+  const filteredPatients = patients.filter((patient) => {
+    const name =
+      patient.displayName ||
+      `${patient.first_name || ""} ${patient.last_name || ""}`.trim();
+    return name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   const handleClick = () => {
     console.log("Navigating to new patient page");
@@ -78,6 +118,7 @@ const filteredPatients = patients.filter((patient) =>
 
   return (
     <div className="min-w-fit">
+      {/* Header */}
       <div className="flex flex-row overflow-x-auto">
         <img
           src={logo}
@@ -98,7 +139,7 @@ const filteredPatients = patients.filter((patient) =>
         <button
           type="button"
           onClick={handleClick}
-          className="rounded-full bg-[#BA0C2F] px-8 py-1 m-4 text-s font-semibold text-white shadow-xs hover:bg-[#A00B29] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+          className="rounded-full bg-[#BA0C2F] px-8 py-1 m-4 text-s font-semibold text-white shadow-xs hover:bg-[#A00B29]"
         >
           + Add Patient
         </button>
@@ -114,11 +155,11 @@ const filteredPatients = patients.filter((patient) =>
         </div>
 
         {loading && (
-          <div className="text-center text-gray-500 pb-4">Loading patients...</div>
+          <div className="text-center text-gray-500 pb-4">
+            Loading patients...
+          </div>
         )}
-        {error && (
-          <div className="text-center text-red-500 pb-4">{error}</div>
-        )}
+        {error && <div className="text-center text-red-500 pb-4">{error}</div>}
 
         {!loading && !error && patients.length > 0 && (
           <div className="flex flex-row pt-5 pb-6">
@@ -126,7 +167,11 @@ const filteredPatients = patients.filter((patient) =>
               <PatientList
                 patients={filteredPatients}
                 selectedPatient={selectedPatient}
-                onSelectPatient={setSelectedPatient}
+                onSelectPatient={(patient) => {
+                  setSelectedPatient(patient);
+                  const uid = patient.firebaseUid || patient.FirebaseUid;
+                  if (uid) loadPatientDetails(uid);
+                }}
               />
             </div>
 
@@ -134,7 +179,7 @@ const filteredPatients = patients.filter((patient) =>
               <div className="pl-8 pr-4 flex flex-row">
                 <PatientContact />
                 <div className="pl-6">
-                  <PatientInfo patient={selectedPatient} />
+                  <PatientInfo patient={patientDetails} />
                 </div>
               </div>
 

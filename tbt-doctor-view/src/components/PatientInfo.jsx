@@ -1,38 +1,58 @@
 const PatientInfo = ({ patient }) => {
+  const info = patient?.Patient || {}; // Access nested "Patient" object
+
   return (
     <div className="patient-info-card relative min-w-[577px] min-h-[283px] shrink-0 rounded-[28px] border border-[#D1D1D1] bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.10)]">
-      <h2 className="patient-info-title absolute left-[26px] top-[25px] text-[24px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif', fontWeight: 510 }}>
+      <h2
+        className="patient-info-title absolute left-[26px] top-[25px] text-[24px] font-normal leading-normal text-black"
+        style={{
+          fontFamily: "SF Pro, -apple-system, Roboto, Helvetica, sans-serif",
+          fontWeight: 510,
+        }}
+      >
         Patient Information
       </h2>
 
-      <div className="patient-first-name absolute left-[27px] top-[76px] w-[113px] text-[16px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
+      <div
+        className="absolute left-[27px] top-[100px] w-[113px] text-[16px] leading-normal text-black"
+        style={{
+          fontFamily: "SF Pro, -apple-system, Roboto, Helvetica, sans-serif",
+        }}
+      >
         <div className="font-bold">First Name:</div>
-        {patient?.firstName || ''}
+        {info.first_name || ""}
       </div>
 
-      <div className="patient-last-name absolute left-[27px] top-[126px] w-[113px] text-[16px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
+      <div
+        className="absolute left-[27px] top-[150px] w-[113px] text-[16px] leading-normal text-black"
+        style={{
+          fontFamily: "SF Pro, -apple-system, Roboto, Helvetica, sans-serif",
+        }}
+      >
         <div className="font-bold">Last Name:</div>
-        {patient?.lastName || ''}
+        {info.last_name || ""}
       </div>
 
-      <div className="patient-dob absolute left-[27px] top-[182px] w-[113px] text-[16px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
-        <div className="font-bold">Date Of Birth:</div>
-        {patient?.dateOfBirth || ''}
-      </div>
-
-      <div className="patient-address absolute left-[263px] top-[76px] w-[227px] text-[16px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
-        <div className="font-bold">Address:</div>
-        {patient?.address || ''}
-      </div>
-
-      <div className="patient-email absolute left-[263px] top-[152px] w-[223px] text-[16px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
+      {/* Email moved up */}
+      <div
+        className="absolute left-[263px] top-[100px] w-[223px] text-[16px] leading-normal text-black"
+        style={{
+          fontFamily: "SF Pro, -apple-system, Roboto, Helvetica, sans-serif",
+        }}
+      >
         <div className="font-bold">Email:</div>
-        {patient?.email || ''}
+        {info.email || ""}
       </div>
 
-      <div className="patient-phone absolute left-[263px] top-[206px] w-[137px] text-[16px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
+      {/* Phone Number moved up */}
+      <div
+        className="absolute left-[263px] top-[150px] w-[137px] text-[16px] leading-normal text-black"
+        style={{
+          fontFamily: "SF Pro, -apple-system, Roboto, Helvetica, sans-serif",
+        }}
+      >
         <div className="font-bold">Phone Number:</div>
-        {patient?.phone || ''}
+        {info.phone_number || ""}
       </div>
     </div>
   );
