@@ -20,6 +20,7 @@ const PatientContactPage = () => {
 
   // 🔹 Fetch messages when patient changes
   useEffect(() => {
+    console.log("🧠 Fetching messages for:", patient._id);
     const fetchMessages = async () => {
       if (!patient?._id) return;
       try {
@@ -103,7 +104,9 @@ const PatientContactPage = () => {
         <div className="flex flex-col pb-6 max-h-fit">
           <div className="text-center mx-8 rounded-[28px]">
             <h1 className="text-[36px] font-bold">
-              {patient?.name || "Unknown Patient"}
+              {patient?.displayName ||
+ `${patient?.Patient?.first_name || ""} ${patient?.Patient?.last_name || ""}`.trim() ||
+ "Unknown Patient"}
             </h1>
           </div>
 
