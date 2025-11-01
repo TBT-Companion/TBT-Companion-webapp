@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
-const PainLog = () => {
+const PainLog = ({ patient }) => {
   const navigate = useNavigate()
   const handleClick = () => {
     console.log('Navigating to pain log page');
-    navigate('/painLog')
+    navigate("/painlog", { state: { patient } });
+    console.log('Patient data sent:', patient);
   };
 
   return (

@@ -28,7 +28,7 @@ const ProgressReportPage = () => {
 
     const handleClick = () => {
         console.log('Navigating to dashboard page');
-        navigate("/")
+        navigate("/dashboard")
       };
   
   

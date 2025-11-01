@@ -5,17 +5,57 @@ import ProgressReportPage from './pages/ProgressReportPage';
 import PatientContactPage from './pages/PatientContactPage';
 import NewPatientPage from './pages/NewPatientPage';
 import PainLogPage from './pages/PainLogPage';
+import SignInPage from './pages/SignInPage';
+import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Dashboard />}/>
-        <Route path='/report' element={<ProgressReportPage />}/>
-        <Route path='/contact' element={<PatientContactPage />}/>
-        <Route path='/newPatient' element={<NewPatientPage />}/>
-        <Route path='/painLog' element={<PainLogPage />} />
+        <Route path="/" element={<SignInPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/report"
+          element={
+            <ProtectedRoute>
+              <ProgressReportPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <PatientContactPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/newPatient"
+          element={
+            <ProtectedRoute>
+              <NewPatientPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/painLog"
+          element={
+            <ProtectedRoute>
+              <PainLogPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   )
