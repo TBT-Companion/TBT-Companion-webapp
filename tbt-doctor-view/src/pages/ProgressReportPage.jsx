@@ -29,15 +29,15 @@ const ProgressReportPage = () => {
 
         //  Generate reports based on API response
         const reportsNew = data.images.slice(1).map((image, index) => {
-          const dateObj = new Date('2025-09-28');
-          dateObj.setDate(dateObj.getDate() + index * 7); // +1 to offset the skipped item
-          const formattedDate = `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
-          const year = dateObj.getFullYear();
+          //split date into date and year
+          const lastIndex = image.date.lastIndexOf('/');
+          const formattedDate = image.date.substring(0, lastIndex);
+          const formattedYear = image.date.substring(lastIndex + 1);
 
           return {
             week: index + 1, 
+            year: formattedYear,
             date: formattedDate,
-            year: String(year),
             description: image.description || '',
             img: image.url || '',
           };

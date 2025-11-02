@@ -20,7 +20,7 @@ const ProgressReportList = ({reports, selectedReport, onSelectReport}) => {
               }`}
               style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
-              Week {report.week}
+              Report {report.week}
             </div>
 
             <div
