@@ -118,7 +118,7 @@ const Dashboard = () => {
 
     const handleClick = () => {
         console.log("Navigating to new patient page");
-        navigate("/newPatient");
+        navigate("/SelectPatient");
     };
 
     const handleLogout = async () => {

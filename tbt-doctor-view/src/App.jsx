@@ -8,6 +8,7 @@ import PainLogPage from './pages/PainLogPage';
 import SignInPage from './pages/SignInPage';
 import ProtectedRoute from "./components/ProtectedRoute";
 import ErrorPage from "./pages/ErrorPage";
+import SelectPatientPage from "./pages/SelectPatientPage";
 
 function App() {
 
@@ -44,6 +45,14 @@ function App() {
           element={
             <ProtectedRoute>
               <NewPatientPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/selectPatient"
+          element={
+            <ProtectedRoute>
+              <SelectPatientPage/>
             </ProtectedRoute>
           }
         />
