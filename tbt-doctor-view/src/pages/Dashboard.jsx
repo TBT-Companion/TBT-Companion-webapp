@@ -57,6 +57,7 @@ const Dashboard = () => {
             const data = await response.json();
             //console.log("Fetched patients:", data);
 
+            const uid = data[0].firebaseUid || data[0].FirebaseUid;
             setPatients(data);
             if (data.length > 0) {
                 setSelectedPatient(data[0]);
@@ -64,6 +65,8 @@ const Dashboard = () => {
                     await loadPatientDetails(data[0].firebaseUid || data[0].FirebaseUid);
                 }
             }
+            //Setting local storage firebaseUid for other pages to use
+            localStorage.setItem("firebaseUid", uid);
         } catch (err) {
             console.error("Error loading patients:", err);
             setError("Failed to load patients");
