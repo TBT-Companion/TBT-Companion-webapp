@@ -34,6 +34,15 @@ const PatientInfo = ({ patient }) => {
       </div>
 
       {/* Email moved up */}
+      <div
+        className="absolute left-[263px] top-[100px] w-[230px] text-[16px] leading-normal text-black"
+        style={{
+          fontFamily: "SF Pro, -apple-system, Roboto, Helvetica, sans-serif",
+        }}
+      >
+        <div className="font-bold">Email:</div>
+        {info.email || info.email_address || ""}
+      </div>
 
       {/* Phone Number moved up */}
       <div

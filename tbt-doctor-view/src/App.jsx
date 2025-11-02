@@ -9,6 +9,7 @@ import SignInPage from './pages/SignInPage';
 import ProtectedRoute from "./components/ProtectedRoute";
 import ErrorPage from "./pages/ErrorPage";
 import SelectPatientPage from "./pages/SelectPatientPage";
+import PatientCreatedPage from './pages/PatientCreatedPage';
 
 function App() {
 
@@ -65,6 +66,7 @@ function App() {
           }
         />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/created" element={<PatientCreatedPage />} />
       </Routes>
     </BrowserRouter>
   )
