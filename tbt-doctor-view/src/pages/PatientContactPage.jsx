@@ -20,11 +20,10 @@ const PatientContactPage = () => {
 
   // 🔹 Fetch messages when patient changes
   useEffect(() => {
-    console.log("🧠 Fetching messages for:", patient._id);
+    if (!patient?._id) return;
+
     const fetchMessages = async () => {
-      if (!patient?._id) return;
       try {
-        setLoading(true);
         const idToken = localStorage.getItem("idToken");
         const res = await fetch(
           `http://localhost:3000/api/chat/messages/${patient._id}`,
@@ -34,8 +33,6 @@ const PatientContactPage = () => {
         );
         if (!res.ok) throw new Error("Failed to load messages");
         const data = await res.json();
-
-        console.log("📩 Messages fetched:", data); // 🔍 Debug
         setMessages(data);
       } catch (err) {
         console.error("Error fetching messages:", err);
@@ -45,9 +42,15 @@ const PatientContactPage = () => {
       }
     };
 
+    // 🟢 Initial fetch
     fetchMessages();
-  }, [patient]);
 
+    // 🕒 Re-fetch every 5 seconds
+    const interval = setInterval(fetchMessages, 5000);
+
+    // 🧹 Cleanup on unmount
+    return () => clearInterval(interval);
+  }, [patient]);
   // 🔹 Send message
   const handleSend = async (content) => {
     if (!content.trim()) return;
@@ -105,8 +108,8 @@ const PatientContactPage = () => {
           <div className="text-center mx-8 rounded-[28px]">
             <h1 className="text-[36px] font-bold">
               {patient?.displayName ||
- `${patient?.Patient?.first_name || ""} ${patient?.Patient?.last_name || ""}`.trim() ||
- "Unknown Patient"}
+                `${patient?.Patient?.first_name || ""} ${patient?.Patient?.last_name || ""}`.trim() ||
+                "Unknown Patient"}
             </h1>
           </div>
 
@@ -119,11 +122,10 @@ const PatientContactPage = () => {
               messages.map((msg) => (
                 <div
                   key={msg._id || Math.random()}
-                  className={`p-3 my-2 rounded-xl max-w-[70%] ${
-                    msg.senderId?._id === patient?._id
+                  className={`p-3 my-2 rounded-xl max-w-[70%] ${msg.senderId?._id === patient?._id
                       ? "bg-gray-200 text-black self-start"
                       : "bg-[#BA0C2F] text-white self-end ml-auto"
-                  }`}
+                    }`}
                 >
                   <strong>
                     {msg.senderId?._id === patient?._id ? "Patient: " : "You: "}

@@ -6,7 +6,7 @@ const DiagnosisSummary = () => {
         Diagnosis Summary
       </h2>
       <p className="text-[12px] font-normal leading-normal" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
-        Bro is addicted to beef parotta.
+        (coming soon)
       </p>
     </div>
   );

@@ -16,7 +16,8 @@ const ProgressReportPage = () => {
   };
 
   // Getting firebaseUid from local storage
-  const uid = localStorage.getItem('firebaseUid');
+  // const uid = localStorage.getItem('firebaseUid');
+  const uid = "VCOZ6UR81Kb8xODsuzWwUfTHtpJ2"; // Temporary hardcoded UID for testing
 
   useEffect(() => {
     const fetchApiData = async () => {

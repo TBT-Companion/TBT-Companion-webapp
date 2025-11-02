@@ -37,7 +37,7 @@ function SignInPage() {
 
             // ✅ Step 4: Redirect based on role
             if (userData.role === 'admin') {
-                window.location.href = 'http://localhost:3000/admin-dashboard.html';
+                window.location.href = 'http://nodejs-env.eba-ggmcwhgm.us-east-2.elasticbeanstalk.com/index.html';
             } else if (userData.role === 'doctor') {
                 window.location.href = '/dashboard';
             } else {

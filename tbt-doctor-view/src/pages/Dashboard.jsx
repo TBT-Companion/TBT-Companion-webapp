@@ -223,13 +223,16 @@ const Dashboard = () => {
                 )}
             </div>
 
-            <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded-full bg-gray-500 px-8 py-1 m-4 text-s font-semibold text-white shadow-xs hover:bg-gray-600"
-            >
-                Logout
-            </button>
+            <div className="flex justify-center">
+                <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="rounded-full bg-gray-500 px-8 py-1 m-4 text-s font-semibold text-white shadow-xs hover:bg-gray-600"
+                >
+                    Logout
+                </button>
+            </div>
+
         </div>
     );
 };
