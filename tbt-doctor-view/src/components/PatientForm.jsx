@@ -1,7 +1,33 @@
-const PatientForm = () => {
+import { useState } from "react";
+
+
+const PatientForm = ({ onSubmit }) => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    gender: "",
+    ssnLast4: "",
+    address1: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone: ""
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSubmit) {
+      onSubmit(formData);
+    }
+  };
   return (
-    <div className="patient-form-container relative w-full max-w-[816px] min-h-[578px]">
-      <h2 
+    <form id="patient-form" onSubmit={handleSubmit} className="patient-form-container relative w-full max-w-[816px] min-h-[578px]">
+      <h2
         className="form-title text-[28px] font-medium leading-normal text-black mb-14"
         style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif', fontWeight: 510 }}
       >
@@ -13,7 +39,7 @@ const PatientForm = () => {
         <div className="left-column flex flex-col gap-y-6">
           {/* First Name Field */}
           <div className="input-field-group flex flex-col gap-2">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
@@ -24,12 +50,15 @@ const PatientForm = () => {
               placeholder="Enter first name"
               className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
             />
           </div>
 
           {/* Last Name Field */}
           <div className="input-field-group flex flex-col gap-2">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
@@ -40,12 +69,15 @@ const PatientForm = () => {
               placeholder="Enter last name"
               className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
             />
           </div>
 
           {/* Date of Birth Field */}
           <div className="input-field-group flex flex-col gap-2">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
@@ -56,12 +88,15 @@ const PatientForm = () => {
               placeholder="MM/DD/YYYY"
               className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
             />
           </div>
 
           {/* Gender Field */}
           <div className="input-field-group flex flex-col gap-2">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
@@ -72,12 +107,15 @@ const PatientForm = () => {
               placeholder="Enter gender"
               className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
             />
           </div>
 
           {/* Last 4 SSN Field */}
           <div className="input-field-group flex flex-col gap-2">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
@@ -88,6 +126,9 @@ const PatientForm = () => {
               placeholder="Enter last 4 SSN"
               className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="ssnLast4"
+              value={formData.ssnLast4}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -96,29 +137,25 @@ const PatientForm = () => {
         <div className="right-column flex flex-col gap-y-6">
           {/* Address Field */}
           <div className="address-field-group flex flex-col">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E] mb-2"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
               Address
             </label>
-            
+
             {/* Address Line 1 */}
             <input
               type="text"
               placeholder="Line 1"
               className="field-input w-full px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] mb-[14px] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="address1"
+              value={formData.address1}
+              onChange={handleChange}
             />
-            
-            {/* Address Line 2 */}
-            <input
-              type="text"
-              placeholder="Line 2"
-              className="field-input w-full px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] mb-[14px] focus:outline-none focus:border-[#A00B29]"
-              style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
-            />
-            
+
+
             {/* City and State Row */}
             <div className="flex gap-[13px] mb-[14px]">
               <input
@@ -126,27 +163,42 @@ const PatientForm = () => {
                 placeholder="City"
                 className="field-input flex-1 px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
                 style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
               />
               <input
                 type="text"
                 placeholder="State"
                 className="field-input w-[108px] px-3 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
                 style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
               />
             </div>
-            
+
             {/* Zip Code */}
             <input
               type="text"
               placeholder="Zip Code"
               className="field-input w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="zip"
+              value={formData.zip}
+              onChange={handleChange}
             />
           </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+
 
           {/* Phone Number Field */}
           <div className="input-field-group flex flex-col gap-2">
-            <label 
+            <label
               className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
             >
@@ -157,27 +209,14 @@ const PatientForm = () => {
               placeholder="###-###-####"
               className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
               style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
-            />
-          </div>
-
-          {/* Email Field */}
-          <div className="input-field-group flex flex-col gap-2">
-            <label 
-              className="field-label text-[22px] font-normal leading-[140%] text-[#1E1E1E]"
-              style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="###-###-####"
-              className="field-input min-w-[240px] px-4 py-3 rounded-lg border border-[#D5D5D5] bg-white text-base font-normal leading-[100%] placeholder:text-[#B3B3B3] focus:outline-none focus:border-[#A00B29]"
-              style={{ fontFamily: 'Inter, -apple-system, Roboto, Helvetica, sans-serif' }}
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
             />
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
