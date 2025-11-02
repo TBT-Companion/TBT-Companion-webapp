@@ -26,19 +26,20 @@ const ProgressReportPage = () => {
         const response = await fetch('http://localhost:3000/images/'+uid); 
         const data = await response.json();
         setApiObject(data);
+        console.log('API data fetched:', data);
 
         //  Generate reports based on API response
         const reportsNew = data.images.slice(1).map((image, index) => {
           //split date into date and year
-          const lastIndex = image.date.lastIndexOf('/');
-          const formattedDate = image.date.substring(0, lastIndex);
-          const formattedYear = image.date.substring(lastIndex + 1);
+          const lastIndex = image.Date.lastIndexOf('/');
+          const formattedDate = image.Date.substring(0, lastIndex);
+          const formattedYear = image.Date.substring(lastIndex + 1);
 
           return {
             week: index + 1, 
             year: formattedYear,
             date: formattedDate,
-            description: image.description || '',
+            description: image.Description || '',
             img: image.url || '',
           };
         });
