@@ -7,7 +7,11 @@ const Log = ({ log }) => {
             </h2>
   
         <div className="patient-first-name absolute left-[27px] top-[76px] pt-1 w-[113px] text-[24px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif' }}>
-            <div className="font-light">Date: {log?.date}/{log?.year}</div>
+            <div className="font-bold">Date: 
+                <div className="font-light">
+                    {log?.date}/{log?.year}
+                </div>
+            </div>
           
         </div>
   

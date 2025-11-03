@@ -19,6 +19,7 @@ function SignInPage() {
 
             const user = result.user;
             const idToken = await user.getIdToken();
+            console.log(idToken)
             localStorage.setItem('idToken', idToken);
 
             // ✅ Step 3: Verify user in backend

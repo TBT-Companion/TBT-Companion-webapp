@@ -30,7 +30,7 @@ const ProgressReportPage = () => {
       const response = await fetch('http://localhost:3000/images/' + uid);
       const data = await response.json();
       setApiObject(data);
-      console.log('API data fetched:', data);
+      console.log('API data fetched:', apiObject);
 
       //  Generate reports based on API response
       const reportsNew = data.images.slice(1).map((image, index) => {
