@@ -14,7 +14,7 @@ import PatientCreatedPage from './pages/PatientCreatedPage';
 function App() {
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="TBT-Companion-webapp">
       <Routes>
         <Route path="/" element={<SignInPage />} />
         <Route
