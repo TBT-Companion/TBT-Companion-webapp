@@ -26,7 +26,7 @@ const PatientCreatedPage = () => {
       </div>
 
       {/* Confirmation message */}
-      <div className="flex flex-col items-center justify-center flex-grow text-center">
+      <div className="flex flex-col items-center justify-center grow text-center">
         <h2 className="text-2xl font-semibold mb-2">
           Patient successfully created!
         </h2>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import logo from '../assets/OSU_LOGO.png'
 import PatientForm from '../components/PatientForm'
 import { useLocation } from "react-router-dom";
+import { ipAddress } from "../constants";
 
 
 
@@ -56,7 +57,7 @@ const NewPatientPage = () => {
 
       // Send to your backend
       const token = localStorage.getItem("idToken"); // Firebase auth token, if used
-      const response = await fetch("http://localhost:3000/createPatient", {
+      const response = await fetch(`http://${ipAddress}:3000/createPatient`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +94,7 @@ const NewPatientPage = () => {
 
       const result = await response.json();
       console.log("✅ Patient created:", result);
-      const doctorResponse = await fetch("http://localhost:3000/api/users/me", {
+      const doctorResponse = await fetch(`http://${ipAddress}:3000/api/users/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +113,7 @@ const NewPatientPage = () => {
       //console.log("Doctor ID:", doctorId);
 
       try {
-        const assignResponse = await fetch("http://localhost:3000/api/users/assign-doctor", {
+        const assignResponse = await fetch(`http://${ipAddress}:3000/api/users/assign-doctor`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

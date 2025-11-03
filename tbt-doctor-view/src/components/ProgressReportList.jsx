@@ -1,7 +1,7 @@
 const ProgressReportList = ({reports, selectedReport, onSelectReport}) => {
 
   return (
-    <div className="grid grid-cols-2 gap-x-[22px] gap-y-[19px] min-w-[187px]">
+    <div className="grid grid-cols-2 gap-x-[22px] gap-y-[22px] min-w-[190px] pr-4">
       {reports.map((report) => {
         const isSelected = selectedReport.week === report.week;
         return (

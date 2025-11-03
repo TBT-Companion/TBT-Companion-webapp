@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import logo from '../assets/OSU_LOGO.png';
 import Report from '../components/Report';
 import ProgressReportList from '../components/ProgressReportList';
+import { ipAddress } from "../constants"
 
 const ProgressReportPage = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ const ProgressReportPage = () => {
   const fetchApiData = async () => {
     try {
       // change the path to the server endpoint
-      const response = await fetch('http://localhost:3000/images/' + uid);
+      const response = await fetch(`http://${ipAddress}:3000/images/` + uid);
       const data = await response.json();
       setApiObject(data);
       console.log('API data fetched:', apiObject);
