@@ -103,44 +103,43 @@ const PatientContactPage = () => {
       </div>
 
       {/* Chat Container */}
-      <div className="border border-[#D1D1D1] bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.10)] rounded-[35px] ml-11 mr-11 pt-10">
-        <div className="flex flex-col pb-6 max-h-fit">
-          <div className="text-center mx-8 rounded-[28px]">
-            <h1 className="text-[36px] font-bold">
-              {patient?.displayName ||
-                `${patient?.Patient?.first_name || ""} ${patient?.Patient?.last_name || ""}`.trim() ||
-                "Unknown Patient"}
-            </h1>
-          </div>
+      <div className="border border-[#D1D1D1] bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.10)] rounded-[35px] ml-11 mr-11 pt-10 h-[80vh] flex flex-col">
+        <div className="text-center mx-8 rounded-[28px] mb-4">
+          <h1 className="text-[36px] font-bold">
+            {patient?.displayName ||
+              `${patient?.Patient?.first_name || ""} ${patient?.Patient?.last_name || ""}`.trim() ||
+              "Unknown Patient"}
+          </h1>
+        </div>
 
-          {/* Message List */}
-          <div className="min-h-[600px] mx-8 rounded-[28px] mt-4 mb-4 overflow-y-auto p-4 bg-[#F8F8F8]">
-            {loading && <p>Loading messages...</p>}
-            {error && <p className="text-red-500">{error}</p>}
-            {!loading &&
-              !error &&
-              messages.map((msg) => (
-                <div
-                  key={msg._id || Math.random()}
-                  className={`p-3 my-2 rounded-xl max-w-[70%] ${msg.senderId?._id === patient?._id
-                      ? "bg-gray-200 text-black self-start"
-                      : "bg-[#BA0C2F] text-white self-end ml-auto"
-                    }`}
-                >
-                  <strong>
-                    {msg.senderId?._id === patient?._id ? "Patient: " : "You: "}
-                  </strong>
-                  {msg.content}
-                </div>
-              ))}
-          </div>
+        {/* Message List */}
+        <div className="flex-1 mx-8 rounded-[28px] overflow-y-auto p-4 bg-[#F8F8F8]">
+          {loading && <p>Loading messages...</p>}
+          {error && <p className="text-red-500">{error}</p>}
+          {!loading &&
+            !error &&
+            messages.map((msg) => (
+              <div
+                key={msg._id || Math.random()}
+                className={`p-3 my-2 rounded-xl max-w-[70%] ${msg.senderId?._id === patient?._id
+                    ? "bg-gray-200 text-black self-start"
+                    : "bg-[#BA0C2F] text-white self-end ml-auto"
+                  }`}
+              >
+                <strong>
+                  {msg.senderId?._id === patient?._id ? "Patient: " : "You: "}
+                </strong>
+                {msg.content}
+              </div>
+            ))}
+        </div>
 
-          {/* Input */}
-          <div className="text-center mx-8 rounded-[28px]">
-            <TextMessage onSend={handleSend} />
-          </div>
+        {/* Input (fixed at bottom of container) */}
+        <div className="mx-8 mt-4 mb-6">
+          <TextMessage onSend={handleSend} />
         </div>
       </div>
+
     </div>
   );
 };

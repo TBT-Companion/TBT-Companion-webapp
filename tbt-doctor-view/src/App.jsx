@@ -25,14 +25,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/report"
-          element={
-            <ProtectedRoute>
-              <ProgressReportPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/report" element={<ProgressReportPage />} />
+
         <Route
           path="/contact"
           element={
@@ -53,7 +47,7 @@ function App() {
           path="/selectPatient"
           element={
             <ProtectedRoute>
-              <SelectPatientPage/>
+              <SelectPatientPage />
             </ProtectedRoute>
           }
         />

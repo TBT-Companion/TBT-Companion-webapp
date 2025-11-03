@@ -30,6 +30,14 @@ const Dashboard = () => {
             console.warn("No patient details loaded yet");
         }
     };
+    const handleOpenProgressReportPage = () => {
+        if (patientDetails) {
+            console.log("Patient details in Dashboard:", patientDetails);
+            navigate("/report", { state: { patient: patientDetails } });
+        } else {
+            console.warn("No patient details loaded yet");
+        }
+    };
     const handleOpenMessagePage = () => {
         if (patientDetails) {
             navigate("/contact", { state: { patient: patientDetails } });
@@ -215,7 +223,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className="pt-6 pl-6">
-                                    <ProgressReport />
+                                    <ProgressReport patient={patientDetails} onOpenPage={handleOpenProgressReportPage}/>
                                 </div>
                             </div>
                         </div>

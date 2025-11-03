@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import logo from '../assets/OSU_LOGO.png';
 import Report from '../components/Report';
 import ProgressReportList from '../components/ProgressReportList';
 
 const ProgressReportPage = () => {
+  const location = useLocation();
+  const patient = location.state?.patient;
+  console.log("Patient in ProgressReportPage:", patient);
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
   const [apiObject, setApiObject] = useState(null);
@@ -16,42 +20,43 @@ const ProgressReportPage = () => {
   };
 
   // Getting firebaseUid from local storage
-  // const uid = localStorage.getItem('firebaseUid');
-  const uid = "VCOZ6UR81Kb8xODsuzWwUfTHtpJ2"; // Temporary hardcoded UID for testing
+  //const uid = localStorage.getItem('firebaseUid');
+  console.log("TOKENNNNNN: " + patient.Patient.FirebaseUid);
+  const uid = patient.Patient.FirebaseUid; // Temporary hardcoded UID for testing
+
+  const fetchApiData = async () => {
+    try {
+      // change the path to the server endpoint
+      const response = await fetch('http://localhost:3000/images/' + uid);
+      const data = await response.json();
+      setApiObject(data);
+      console.log('API data fetched:', data);
+
+      //  Generate reports based on API response
+      const reportsNew = data.images.slice(1).map((image, index) => {
+        //split date into date and year
+        const lastIndex = image.Date.lastIndexOf('/');
+        const formattedDate = image.Date.substring(0, lastIndex);
+        const formattedYear = image.Date.substring(lastIndex + 1);
+
+        return {
+          week: index + 1,
+          year: formattedYear,
+          date: formattedDate,
+          description: image.Description || '',
+          img: image.url || '',
+        };
+      });
+
+
+      setReports(reportsNew);
+      setSelectedReport(reportsNew[0]); //  Set initial selected report
+    } catch (error) {
+      console.error('Error fetching API data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchApiData = async () => {
-      try {
-        // change the path to the server endpoint
-        const response = await fetch('http://localhost:3000/images/'+uid); 
-        const data = await response.json();
-        setApiObject(data);
-        console.log('API data fetched:', data);
-
-        //  Generate reports based on API response
-        const reportsNew = data.images.slice(1).map((image, index) => {
-          //split date into date and year
-          const lastIndex = image.Date.lastIndexOf('/');
-          const formattedDate = image.Date.substring(0, lastIndex);
-          const formattedYear = image.Date.substring(lastIndex + 1);
-
-          return {
-            week: index + 1, 
-            year: formattedYear,
-            date: formattedDate,
-            description: image.Description || '',
-            img: image.url || '',
-          };
-        });
-
-
-        setReports(reportsNew);
-        setSelectedReport(reportsNew[0]); //  Set initial selected report
-      } catch (error) {
-        console.error('Error fetching API data:', error);
-      }
-    };
-
     fetchApiData();
   }, []);
 

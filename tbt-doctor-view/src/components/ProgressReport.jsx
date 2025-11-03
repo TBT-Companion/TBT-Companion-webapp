@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-const ProgressReport = () => {
-  const navigate = useNavigate()
+const ProgressReport = ({ patient }) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
     console.log('Navigating to progress report page');
-    navigate("/report")
+    navigate("/report", { state: { patient } });
+    console.log('Patient data sent:', patient);
   };
 
   return (

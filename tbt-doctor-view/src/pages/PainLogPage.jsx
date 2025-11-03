@@ -9,6 +9,7 @@ import PainLogList from '../components/PainLogList'
 const PainLogPage = () => {
     const location = useLocation();
     const patient = location.state?.patient;
+    console.log("Patient in PainLogPage:", patient);
     const logs = Object.entries(patient.Patient.Pain_log).map(([key, log]) => ({
         log: key,
         date: new Date(log.date).toLocaleDateString("en-US", { month: "numeric", day: "numeric" }),
