@@ -1,12 +1,30 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 
 const PainLog = ({ patient }) => {
   const navigate = useNavigate()
   const handleClick = () => {
     console.log('Navigating to pain log page');
     navigate("/painlog", { state: { patient } });
-    console.log('Patient data sent:', patient);
   };
+  const [logsArray, setLogsArray] = useState([]);
+
+  useEffect(() => {
+    if (patient?.Patient?.Pain_log) {
+      const logs = Object.values(patient.Patient.Pain_log);
+      setLogsArray(logs)
+      console.log("Logs:", logsArray);
+    }
+  }, [patient]);
+
+  const lastIndex = logsArray.length - 1;
+  const lastLog = logsArray.length > 0 ? logsArray[lastIndex] : null;  
+  console.log("Last Log: ", lastLog)
+  const date = lastLog
+    ? new Date(lastLog.date).toLocaleDateString("en-US", { month: "numeric", day: "numeric" })
+    : null;
+  const year = lastLog ? new Date(lastLog.date).getFullYear().toString() : null;
 
   return (
     <button
@@ -19,7 +37,10 @@ const PainLog = ({ patient }) => {
       </div>
 
       <div className="last-log-date absolute left-[26px] top-[132px] w-[138px] h-[31px] text-[14px] font-normal leading-normal text-black" style={{ fontFamily: 'SF Pro, -apple-system, Roboto, Helvetica, sans-serif', fontWeight: 510 }}>
-        Last Log: 10/25/2025
+        Last Log: 
+        <div>
+          {date}/{year}
+        </div>
       </div>
     </button>
   );

@@ -4,6 +4,7 @@ import OSULogo from '../assets/wexner.png';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebase-config';
+import { ipAddress } from '../constants';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -19,10 +20,11 @@ function SignInPage() {
 
             const user = result.user;
             const idToken = await user.getIdToken();
+            console.log(idToken)
             localStorage.setItem('idToken', idToken);
 
             // ✅ Step 3: Verify user in backend
-            const response = await fetch('http://localhost:3000/api/users/me', {
+            const response = await fetch(`http://${ipAddress}:3000/api/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
                 },
@@ -66,7 +68,7 @@ function SignInPage() {
             localStorage.setItem('idToken', idToken);
 
             // Step 3: Verify user in backend
-            const response = await fetch('http://localhost:3000/api/users/me', {
+            const response = await fetch(`http://${ipAddress}:3000/api/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
                 },
@@ -82,7 +84,7 @@ function SignInPage() {
             // Step 4: Redirect based on role
             if (userData.role === 'admin') {
                 // Redirect to your coworker’s existing admin HTML page
-                window.location.href = 'http://localhost:3000/admin-dashboard.html';
+                window.location.href = `http://${ipAddress}:3000/admin-dashboard.html`;
             } else if (userData.role === 'doctor') {
                 // React dashboard
                 window.location.href = '/dashboard';

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { ipAddress } from "../constants"
 import logo from "../assets/OSU_LOGO.png";
 
 const SelectPatientPage = () => {
@@ -14,7 +14,7 @@ const SelectPatientPage = () => {
             try {
                 const token = localStorage.getItem("idToken");
                 //console.log("Fetching unassigned patients with token:", token);
-                const response = await fetch("http://localhost:3000/api/users/unassigned-patients", {
+                const response = await fetch(`http://${ipAddress}:3000/api/users/unassigned-patients`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json"

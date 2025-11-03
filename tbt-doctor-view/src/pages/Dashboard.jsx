@@ -11,11 +11,14 @@ import PainLog from "../components/PainLog";
 import ProgressReport from "../components/ProgressReport";
 import PatientContact from "../components/PatientContact";
 import SearchBar from "../components/SearchBar";
+import { ipAddress } from "../constants";
+
+
 
 const Dashboard = () => {
-    const name = "Collins";
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    const [doctor, setDoctor] = useState(null)
     const [patients, setPatients] = useState([]);
     const [selectedPatient, setSelectedPatient] = useState(null);
     const [patientDetails, setPatientDetails] = useState(null);
@@ -46,13 +49,38 @@ const Dashboard = () => {
         }
     };
 
+    const loadDoctor = async () => {
+        try {
+            setLoading(true);
+            const idToken = localStorage.getItem("idToken");
+            const response = await fetch(`http://${ipAddress}:3000/api/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch doctor");
+            }
+
+            const data = await response.json();
+
+            setDoctor(data);
+            console.log(data)
+        } catch (error) {
+            console.error("Error loading patients:", error);
+            setDoctor(null)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     // ✅ Fetch patient list
     const loadPatients = async () => {
         try {
             setLoading(true);
             const idToken = localStorage.getItem("idToken");
-
-            const response = await fetch("http://localhost:3000/api/users/patients", {
+            const response = await fetch(`http://${ipAddress}:3000/api/users/patients`, {
                 headers: {
                     Authorization: `Bearer ${idToken}`,
                 },
@@ -95,7 +123,7 @@ const Dashboard = () => {
 
             const idToken = localStorage.getItem("idToken");
             const response = await fetch(
-                `http://localhost:3000/patient/firebase/${firebaseUid}`,
+                `http://${ipAddress}:3000/patient/firebase/${firebaseUid}`,
                 {
                     headers: { Authorization: `Bearer ${idToken}` },
                 }
@@ -114,10 +142,15 @@ const Dashboard = () => {
         }
     };
 
-    // ✅ Load patients on mount
+    //✅ Load patients on mount
     useEffect(() => {
         loadPatients();
     }, []);
+
+    useEffect(() => {
+        loadDoctor();
+    }, [])
+
 
     // ✅ Filter patient list by displayName or name fields
     const filteredPatients = patients.filter((patient) => {
@@ -142,6 +175,10 @@ const Dashboard = () => {
         }
     };
 
+    if (!doctor) {
+        return <p>Loading Dashboard...</p>;
+    }
+
     return (
         <div className="min-w-fit">
             {/* Header */}
@@ -158,7 +195,7 @@ const Dashboard = () => {
 
             <div className="flex flex-row justify-between ml-11 mr-6">
                 <div className="flex flex-col">
-                    <h1 className="text-[18px]">Good Morning Dr. {name}</h1>
+                    <h1 className="text-[18px]">Good Morning Dr. {doctor.displayName}</h1>
                     <h1 className="text-2xl font-bold pb-6">Dashboard:</h1>
                 </div>
 

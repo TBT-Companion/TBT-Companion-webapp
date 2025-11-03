@@ -18,6 +18,7 @@ const PainLogPage = () => {
         location: log.location,
         intensity: log.intensity,
     }));
+    console.log("Logs: ", logs)
 
     const [selectedLog, setSelectedLog] = useState(logs[0]);
     const navigate = useNavigate()
