@@ -41,7 +41,7 @@ function SignInPage() {
             if (userData.role === 'admin') {
                 window.location.href = 'http://nodejs-env.eba-ggmcwhgm.us-east-2.elasticbeanstalk.com/index.html';
             } else if (userData.role === 'doctor') {
-                window.location.href = '/dashboard';
+                window.location.href = '/TBT-Companion-webapp/dashboard';
             } else {
                 setError('Access denied: this portal is only for doctors or admins.');
                 await auth.signOut();
