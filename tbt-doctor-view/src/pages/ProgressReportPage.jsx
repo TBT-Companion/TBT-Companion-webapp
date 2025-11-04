@@ -31,10 +31,10 @@ const ProgressReportPage = () => {
       const response = await fetch(`http://${ipAddress}:3000/images/` + uid);
       const data = await response.json();
       setApiObject(data);
-      console.log('API data fetched:', apiObject);
+      console.log('API data fetched:', data);
 
       //  Generate reports based on API response
-      const reportsNew = data.images.slice(1).map((image, index) => {
+      const reportsNew = data.images.slice(0).map((image, index) => {
         //split date into date and year
         const lastIndex = image.Date.lastIndexOf('/');
         const formattedDate = image.Date.substring(0, lastIndex);
